@@ -40,7 +40,7 @@
 #include <boost/thread.hpp>
 #include <boost/date_time.hpp>
 
-#include <websocket-rails-client/config.h>
+#include <libmsgwebsocket/config.h>
 
 #include <websocketpp/config/asio_client.hpp>
 #include <websocketpp/client.hpp>

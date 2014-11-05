@@ -22,8 +22,8 @@
 #include <boost/asio/signal_set.hpp>
 
 
-#include <websocket-rails-client/msgwebsocket.hpp>
-#include "websocket-rails-client/websocket_rails.hpp"
+#include <libmsgwebsocket/msgwebsocket.hpp>
+#include <websocket-rails-client/websocket_rails.hpp>
 
 /** valid events
 
