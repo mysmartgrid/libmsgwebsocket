@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include <websocket-rails-client/websocketFactory.hpp>
-#include <websocket-rails-client/msgwebsocket.hpp>
+//#include <websocket-rails-client/websocketFactory.hpp>
+#include <libmsgwebsocket/msgwebsocket.hpp>
 
 
 void demo_measurements(jsonxx::Object data) 

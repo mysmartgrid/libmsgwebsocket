@@ -27,7 +27,7 @@
 	
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/deadline_timer.hpp>
-#include "websocket-rails-client/websocket_rails.hpp"
+#include <websocket-rails-client/websocket_rails.hpp>
 
 #include <jsonxx/jsonxx.h>
 

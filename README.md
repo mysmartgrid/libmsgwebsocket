@@ -18,3 +18,12 @@ connections to the Ruby Websocket-Rails server and supports the Websocket-Rails 
 * Websocket-Rails server, https://github.com/websocket-rails/websocket-rails (v0.7.0)
 
 
+# test
+
+./test/client wss://dev4-playground.mysmartgrid.de/websocket d1d1d1d1d1d1d1d1s1s1s1s1s1s1s1s1 1
+
+
+./test/demo_load wss://dev4-playground.mysmartgrid.de/websocket d1d1d1d1d1d1d1d1s1s1s1s1s1s1s1s1
+
+
+

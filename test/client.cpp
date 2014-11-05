@@ -1,5 +1,5 @@
 #include <iostream>
-#include <websocket-rails-client/msgwebsocket.hpp>
+#include <libmsgwebsocket/msgwebsocket.hpp>
 
 
 int main(int argc, const char* argv[]) {
