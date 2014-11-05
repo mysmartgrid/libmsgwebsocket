@@ -1,0 +1,4 @@
+/*
+*/
+
+#cmakedefine USE_DEBUG 1
