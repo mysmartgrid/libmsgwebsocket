@@ -4,9 +4,9 @@
 
 int main(int argc, const char* argv[]) {
 
-    if (argc != 4) {
+    if (argc != 3 || argc !=5) {
         std::cout << "Usage:" << std::endl;
-        std::cout << " ./client <url> <sensor_uuid> <timestamp> <value>" << std::endl;
+        std::cout << " ./client <url> <sensor_uuid> [<timestamp> <value>]" << std::endl;
         return -1;
     }
 
@@ -19,16 +19,8 @@ int main(int argc, const char* argv[]) {
 			// create a value
 			float value = random() % 500;
 			
-			// get timestamp
-			time_t timestamp;
-			time(&timestamp);
-			
-			std::ostringstream os;
-			os << "{\"sensor_uuid\": \"" << argv[2] << "\", \"timestamp\": " << timestamp << ", \"value\": " << value << "}";
-
 			try {
 				dispatcher.post_measurement(argv[2], value);
-				//dispatcher.post_measurement(os.str());
 
 				usleep(1000000);
 			} catch( std::exception &e) {

@@ -18,7 +18,7 @@ It Extends the websocket-rails-client-cpp [1] library.
 * Websocket-Rails server, https://github.com/websocket-rails/websocket-rails (v0.7.0)
 
 
-# test
+# demo programs
 
 ./test/client wss://dev4-playground.mysmartgrid.de/websocket d1d1d1d1d1d1d1d1s1s1s1s1s1s1s1s1 1
 
@@ -26,4 +26,31 @@ It Extends the websocket-rails-client-cpp [1] library.
 ./test/demo_load wss://dev4-playground.mysmartgrid.de/websocket d1d1d1d1d1d1d1d1s1s1s1s1s1s1s1s1
 
 
+# CPP
 
+## Post values
+
+``` // create the connection
+``` websocket::msgwebsocket dispatcher(url);
+``` // post a value for a sensor
+``` dispatcher.post_measurement(sensor_uuid, value);
+``` dispatcher.disconnect();
+
+## get values
+
+``` // function to call when the server sends a new value
+``` void demo_measurements(jsonxx::Object data) 
+``` {
+``` 	std::cout << "Function demo_measurement called" << std::endl;
+``` 	std::cout << data.json() << std::endl;
+``` }
+
+``` // create the connection
+``` websocket::msgwebsocket dispatcher(url);
+``` // subscribe a sensor
+```	dispatcher.subscribe(sensor_uuid);
+``` // bind the function to call when the server sends new values
+```	dispatcher.bind_channel(sensor_uuid, "create", boost::bind(&demo_measurements, _1));
+``` // query the server for values within an timeinterval
+```	dispatcher.load_measurement(sensor_uuid, start_time, end_time);
+``` dispatcher.disconnect();
