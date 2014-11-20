@@ -56,7 +56,7 @@ websocket::msgwebsocket::msgwebsocket(
 		, _firstcall(true)
 {
 	_dispatcher = WebsocketRails::Ptr(new WebsocketRails(_url));
-	
+
 	_init();
 }
 
@@ -129,7 +129,6 @@ void websocket::msgwebsocket::_init() {
 
 	//boost::asio::signal_set signals(_io_service, SIGINT, SIGTERM);
   this->_survey_thread = boost::thread(&websocket::msgwebsocket::_run, this);
-	//this->_survey(boost::system::error_code());
 }
 
 void websocket::msgwebsocket::_run() {
@@ -149,6 +148,7 @@ void websocket::msgwebsocket::_survey(const boost::system::error_code& error)
 		
 			try {
 				_dispatcher->reconnect();
+				std::cout<<"   client is reconnected."<< std::endl;
 				if(!_dispatcher->isConnected()) {
 					_debug && std::cout<<">>>> NOT CONNECTED...\n";
 					return;
@@ -159,7 +159,7 @@ void websocket::msgwebsocket::_survey(const boost::system::error_code& error)
 				std::cout<<"Except: "<< e.what() << std::endl;
 			}
 		}
-		//this->ping();
+		this->ping();
 	}
 	
 	this->_firstcall = false;
@@ -220,24 +220,6 @@ void websocket::msgwebsocket::post_measurement(const std::string &value) {
 
 	// check connection
 	_debug && std::cout << "send measurement" << std::endl;
-#if 0
-	if(!_dispatcher->isConnected()) {
-		_debug && std::cout<< "   trying to connect..."<< std::endl;
-		
-		try {
-			_dispatcher->reconnect();
-			if(!_dispatcher->isConnected()) {
-				_debug && std::cout<<">>>> NOT CONNECTED...\n";
-				return;
-			}
-			
-		}
-		catch(std::exception &e) {
-			std::cout<<"Except: "<< e.what() << std::endl;
-		}
-	}
-#endif
-
 	jsonxx::Object measurement;
 	measurement.parse(value);
 	Event post = _dispatcher->trigger("measurements.post", measurement, 
@@ -302,8 +284,8 @@ I [2014-10-20 09:43:01.795] ConnectionManager Connection opened: #<Connection::3
 */
 void websocket::msgwebsocket::received_measurement(jsonxx::Object data) {
 
-    std::cout << ">>>>>>Function received_measurement called" << std::endl;
-    std::cout << data.json() << std::endl;
+	_debug && std::cout << ">>>>>>Function received_measurement called" << std::endl;
+	_debug && std::cout << data.json() << std::endl;
 //	if(this->_onReceive_callback) {
 //		cb_func callback = this->_onLoadFailure_callback;
 //		callback(data);
@@ -371,9 +353,9 @@ void websocket::msgwebsocket::ping() {
 }
 
 void websocket::msgwebsocket::on_open(jsonxx::Object data) {
-	 _debug && std::cout<<"on_open\n";
-	 _debug && std::cout << "Function on_open called" << std::endl;
-	 _debug && std::cout << data.json() << std::endl;
+	_debug && std::cout<<"on_open\n";
+	_debug && std::cout << "Function on_open called" << std::endl;
+	_debug && std::cout << data.json() << std::endl;
 
 }
 
