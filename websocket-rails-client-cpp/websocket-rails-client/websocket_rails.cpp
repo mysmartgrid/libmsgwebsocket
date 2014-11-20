@@ -79,13 +79,13 @@ WebsocketRails::connection WebsocketRails::reconnect() {
   std::string oldconnection_id = this->conn != 0 ? this->conn->getConnectionId() : "";
   this->disconnect();
   if(this->connect() == "connected") {
-    for(auto& x: this->queue) {
-        Event event = x.second;
-        if(event.getConnectionId() == oldconnection_id && !event.isResult()) {
-          this->triggerEvent(event);
-        }
-    }
 		conn_struct.channels = this->reconnectChannels(); 
+    for(auto& x: this->queue) {
+			Event event = x.second;
+			if(event.getConnectionId() == oldconnection_id && !event.isResult()) {
+				this->triggerEvent(event);
+			}
+    }
   }
   conn_struct.state = this->state;
   return conn_struct;
@@ -207,7 +207,9 @@ Event WebsocketRails::triggerEvent(Event event) {
   }
   if(this->conn != 0) {
     this->conn->trigger(event);
-  }
+  } else {
+		std::cout<<"WebsocketRails::triggerEvent: NO connection...."<<std::endl;
+	}
   return event;
 }
 
@@ -321,7 +323,7 @@ bool WebsocketRails::connectionStale() {
 
 
 std::vector<Channel::Ptr> WebsocketRails::reconnectChannels() {
-  std::vector<Channel::Ptr> results;
+	std::vector<Channel::Ptr> results;
   for (auto& x: this->channels) {
     Channel::Ptr channel = x.second;
     std::string channel_name = channel->getName();
