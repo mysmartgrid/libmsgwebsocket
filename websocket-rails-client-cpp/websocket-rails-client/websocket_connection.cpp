@@ -100,7 +100,9 @@ void WebsocketConnection::close() {
 /* Trigger an event on the server */
 void WebsocketConnection::trigger(Event event) {
   if(this->dispatcher->getState() != "connected") {
+		this->queue_lock.lock();
     this->event_queue.push(event);
+		this->queue_lock.unlock();
   } else {
     this->sendEvent(event);
   }
@@ -122,11 +124,15 @@ std::string WebsocketConnection::getConnectionId() {
 /* Flush all events in queue */
 std::queue<Event> WebsocketConnection::flushQueue() {
 	while(!this->event_queue.empty()) {
+		this->queue_lock.lock();
 		Event e = this->event_queue.front();
 		this->event_queue.pop();
+		this->queue_lock.unlock();
     this->trigger(e);
   }
+	this->queue_lock.lock();
   std::swap(this->event_queue, this->empty);
+	this->queue_lock.unlock();
   return this->event_queue;
 }
 
