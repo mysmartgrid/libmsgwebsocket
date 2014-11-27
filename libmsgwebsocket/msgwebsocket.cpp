@@ -61,12 +61,15 @@ websocket::msgwebsocket::msgwebsocket(
 }
 
 websocket::msgwebsocket::~msgwebsocket() {
-	_dispatcher->disconnect();
+	//_dispatcher->disconnect();
+	disconnect();
 	_dispatcher.reset();
 }
 
 void websocket::msgwebsocket::disconnect() {
+	_io_service.stop();
 	_dispatcher->disconnect();
+	this->_survey_thread.join();
 }
 
 
