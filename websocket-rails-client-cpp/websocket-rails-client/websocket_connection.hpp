@@ -69,6 +69,7 @@ private:
   WebsocketRails * dispatcher;
   std::queue<Event> empty;
   std::queue<Event> event_queue;
+	boost::mutex queue_lock; /**< Lock for queue */
   websocketpp::connection_hdl ws_hdl;
   client ws_client;
 
